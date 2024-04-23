@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  backend: 
+    image: 'atascados-api'
+    container_name: 'atascados-api'
+    platform: linux/x86_64
+    build: 
+      context: .
+      dockerfile: '.docker/Dockerfile'
+    ports:
+      - 3000:3000
+    env_file:
+      - .env.development
+    volumes:
+      - ./:/app
+    networks:
+      - atascados-network
+  db:
+    image: 'mongo:latest'
+    container_name: 'atascados-db'
+    restart: always
+    platform: linux/x86_64
+    environment: 
+      - ME_CONFIG_MONGODB_URL=${CONNECTION_STRING}
+    ports:
+      - 27017:27017
+    expose:
+      - 27017
+    volumes:
+      - db:/data/db
+    networks:
+      atascados-network: 
+        ipv4_address: 244.178.44.111
+    
+# # Names our volume
+volumes:
+  db:
+    driver: local
+
+networks:
+  atascados-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 244.178.5.0/16

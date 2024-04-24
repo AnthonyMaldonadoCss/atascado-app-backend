@@ -1,19 +1,19 @@
 version: '3'
 services:
-  db:
-    image: 'mongo:latest'
-    container_name: 'atascados-db'
-    restart: always
-    platform: linux/x86_64
-    env_file: 
-      - .env.development
-    ports:
-      - 27017:27017
-    expose:
-      - 27017
-    volumes:
-      - db:/data/db
-    network_mode: host
+  # db:
+  #   image: 'mongo:latest'
+  #   container_name: 'atascados-db'
+  #   restart: always
+  #   platform: linux/x86_64
+  #   env_file: 
+  #     - .env.development
+  #   ports:
+  #     - 27017:27017
+  #   expose:
+  #     - 27017
+  #   volumes:
+  #     - db:/data/db
+  #   network_mode: host
   backend: 
     image: 'atascados-api'
     container_name: 'atascados-api'
@@ -27,7 +27,6 @@ services:
       - .env.development
     volumes:
       - ./:/app
-    network_mode: host
   auth: 
     image: 'atascados-auth'
     container_name: 'atascados-auth'
@@ -39,7 +38,6 @@ services:
       - .env.development
     volumes:
       - ./:/app
-    network_mode: host
   back-office: 
     image: 'atascados-back-office'
     container_name: 'atascados-back-office'
@@ -51,7 +49,6 @@ services:
       - .env.development
     volumes:
       - ./:/app
-    network_mode: host  
-volumes:
-  db:
-    driver: local
+# volumes:
+#   db:
+#     driver: local
